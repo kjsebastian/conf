@@ -26,6 +26,8 @@
                                        auto-completion
                                        better-defaults
                                        scala
+                                       clojure
+                                       haskell
                                        org
                                        syntax-checking
                                        markdown
@@ -41,6 +43,8 @@
                                       groovy-mode
                                       yaml-mode
                                       material-theme
+                                      ample-theme
+                                      oldlace-theme
                                       )
 
    ;; A list of packages and/or extensions that will not be install and loaded.
@@ -82,6 +86,7 @@
    ;; Press <SPC> T n to cycle to the next theme in the list (works great
    ;; with 2 themes variants, one dark and one light)
    dotspacemacs-themes '(material
+                         material-light
                          solarized-light)
 
 
@@ -113,7 +118,7 @@
    ;; the commands bound to the current keystrokes.
    dotspacemacs-guide-key-delay 0.7
    ;; If non nil the frame is fullscreen when Emacs starts up (Emacs 24.4+ only).
-   dotspacemacs-fullscreen-at-startup t
+   dotspacemacs-fullscreen-at-startup nil
    ;; If non nil `spacemacs/toggle-fullscreen' will not use native fullscreen.
    ;; Use to disable fullscreen animations in OSX."
    dotspacemacs-fullscreen-use-non-native nil
@@ -148,11 +153,11 @@
    ;; specified with an installed package.
    ;; Not used for now.
    dotspacemacs-default-package-repository nil
-
-   ;; Cabal init
-
    )
+  ;; Cabal init
   (add-to-list 'exec-path "/Users/kiran/.cabal/bin/")
+  (rainbow-delimiters-mode-disable)
+  (highlight-parentheses-mode)
   )
 
 (defun dotspacemacs/config ()
