@@ -13,11 +13,7 @@
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers '(osx
                                        dash
-                                       (html :variables
-                                             css-indent-offset 2
-                                             web-mode-code-indent-offset 2
-                                             web-mode-markup-indent-offset 2
-                                             web-mode-css-indent-offset 2)
+                                       html
                                        (git :variables
                                             git-gutter-use-fringe t
                                             git-magit-status-fullscreen nil)
@@ -25,9 +21,11 @@
                                        colors
                                        auto-completion
                                        better-defaults
-                                       scala
+                                       (haskell :variables
+                                                haskell-enable-shm-support t
+                                                haskell-enable-hindent-style "gibiansky")
                                        clojure
-                                       haskell
+                                       scala
                                        org
                                        syntax-checking
                                        markdown
@@ -39,16 +37,19 @@
    ;; wrapped in a layer. If you need some configuration for these
    ;; packages then consider to create a layer, you can also put the
    ;; configuration in `dotspacemacs/config'.
-   dotspacemacs-additional-packages '(java-snippets
-                                      groovy-mode
-                                      yaml-mode
-                                      material-theme
+   dotspacemacs-additional-packages '(yaml-mode
+                                      flatland-theme
+                                      darktooth-theme
+                                      gotham-theme
+                                      ujelly-theme
                                       ample-theme
-                                      oldlace-theme
+                                      tronesque-theme
+                                      material-theme
                                       )
 
    ;; A list of packages and/or extensions that will not be install and loaded.
-   dotspacemacs-excluded-packages '()
+   dotspacemacs-excluded-packages '(cmm-mode)
+
 
    ;; If non-nil spacemacs will delete any orphan packages, i.e. packages that
    ;; are declared in a layer which is not a member of
@@ -72,7 +73,7 @@
    ;; directory. A string value must be a path to a .PNG file.
    ;; If the value is nil then no banner is displayed.
    ;; dotspacemacs-startup-banner 'official
-   dotspacemacs-startup-banner '123
+   dotspacemacs-startup-banner nil
    ;; t if you always want to see the changelog at startup
    dotspacemacs-always-show-changelog t
    ;; List of items to show in the startup buffer. If nil it is disabled.
@@ -85,15 +86,23 @@
    ;; List of themes, the first of the list is loaded when spacemacs starts.
    ;; Press <SPC> T n to cycle to the next theme in the list (works great
    ;; with 2 themes variants, one dark and one light)
-   dotspacemacs-themes '(material
+   dotspacemacs-themes '(
+                         flatland
+                         darktooth
+                         gotham
+                         ujelly
+                         tronesque
+                         material
                          material-light
-                         solarized-light)
+                         solarized-light
+                         solarized-dark
+                         )
 
 
    ;; Default font. The powerline-offset allows to quickly tweak the mode-line
    ;; size to make separators look not too crappy.
-   dotspacemacs-default-font '("m+ 1mn"
-                               :size 13
+   dotspacemacs-default-font '("Terminus (TTF)"
+                               :size 14
                                :weight normal
                                :width normal
                                :powerline-scale 1.3)
@@ -155,16 +164,13 @@
    dotspacemacs-default-package-repository nil
    )
   ;; Cabal init
-  (add-to-list 'exec-path "/Users/kiran/.cabal/bin/")
-  (rainbow-delimiters-mode-disable)
-  (highlight-parentheses-mode)
-  )
+  (add-to-list 'exec-path "/Users/kiran/.cabal/bin/"))
 
 (defun dotspacemacs/config ()
   "This is were you can ultimately override default Spacemacs configuration.
 This function is called at the very end of Spacemacs initialization."
 
-  (setq powerline-default-separator 'chamfer)
+  (setq powerline-default-separator nil)
   (global-company-mode)
 
   (define-key evil-normal-state-map "H" "^")
@@ -177,72 +183,22 @@ This function is called at the very end of Spacemacs initialization."
   (define-key company-active-map (kbd "TAB") (lambda () (interactive) (company-complete-common-or-cycle 1)))
   (define-key company-active-map (kbd "<backtab>") (lambda () (interactive) (company-complete-common-or-cycle -1)))
 
-  ;; RACER
-  (setq racer-rust-src-path "~/dev/workspaces/rust/rust/src/")
-  (setq racer-cmd "~/dev/workspaces/rust/racer/target/release/racer")
-  (add-to-list 'load-path "~/dev/workspaces/rust/racer/editors")
-  (eval-after-load "rust-mode" '(require 'racer))
-
   ;; Select pasted text EVIL
   (define-key evil-normal-state-map (kbd "g p") (kbd "` [ v ` ]"))
 
   ;; Rainbow css hook
   (add-hook 'css-mode-hook 'rainbow-mode)
+  (add-hook 'clojure-mode-hook 'paredit-mode)
+
+  ;; (setq-default flycheck-disabled-checkers
+  ;;   (append flycheck-disabled-checkers '(javascript-jshint)))
+
+  ;; disable json-jsonlist checking for json files
+  (setq-default flycheck-disabled-checkers
+                (append flycheck-disabled-checkers
+                        '(json-jsonlist) '(javascript-jshint)))
+
+  ;; Use eslint
+  (flycheck-add-mode 'javascript-eslint 'web-mode)
 
   )
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(ahs-case-fold-search nil)
- '(ahs-default-range (quote ahs-range-whole-buffer))
- '(ahs-idle-interval 0.25)
- '(ahs-idle-timer 0 t)
- '(ahs-inhibit-face-list nil)
- '(compilation-message-face (quote default))
- '(cua-global-mark-cursor-color "#2aa198")
- '(cua-normal-cursor-color "#657b83")
- '(cua-overwrite-cursor-color "#b58900")
- '(cua-read-only-cursor-color "#859900")
- '(highlight-changes-colors (quote ("#d33682" "#6c71c4")))
- '(highlight-symbol-colors
-   (--map
-    (solarized-color-blend it "#fdf6e3" 0.25)
-    (quote
-     ("#b58900" "#2aa198" "#dc322f" "#6c71c4" "#859900" "#cb4b16" "#268bd2"))))
- '(highlight-symbol-foreground-color "#586e75")
- '(highlight-tail-colors
-   (quote
-    (("#eee8d5" . 0)
-     ("#B4C342" . 20)
-     ("#69CABF" . 30)
-     ("#69B7F0" . 50)
-     ("#DEB542" . 60)
-     ("#F2804F" . 70)
-     ("#F771AC" . 85)
-     ("#eee8d5" . 100))))
- '(hl-bg-colors
-   (quote
-    ("#DEB542" "#F2804F" "#FF6E64" "#F771AC" "#9EA0E5" "#69B7F0" "#69CABF" "#B4C342")))
- '(hl-fg-colors
-   (quote
-    ("#fdf6e3" "#fdf6e3" "#fdf6e3" "#fdf6e3" "#fdf6e3" "#fdf6e3" "#fdf6e3" "#fdf6e3")))
- '(magit-diff-use-overlays nil)
- '(paradox-github-token t)
- '(pos-tip-background-color "#eee8d5")
- '(pos-tip-foreground-color "#586e75")
- '(ring-bell-function (quote ignore) t)
- '(smartrep-mode-line-active-bg (solarized-color-blend "#859900" "#eee8d5" 0.2))
- '(term-default-bg-color "#fdf6e3")
- '(term-default-fg-color "#657b83")
- '(weechat-color-list
-   (quote
-    (unspecified "#fdf6e3" "#eee8d5" "#990A1B" "#dc322f" "#546E00" "#859900" "#7B6000" "#b58900" "#00629D" "#268bd2" "#93115C" "#d33682" "#00736F" "#2aa198" "#657b83" "#839496"))))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(company-tooltip-common ((t (:inherit company-tooltip :weight bold :underline nil))))
- '(company-tooltip-common-selection ((t (:inherit company-tooltip-selection :weight bold :underline nil)))))
