@@ -38,17 +38,14 @@
    ;; packages then consider to create a layer, you can also put the
    ;; configuration in `dotspacemacs/config'.
    dotspacemacs-additional-packages '(yaml-mode
-                                      flatland-theme
                                       darktooth-theme
                                       gotham-theme
-                                      ujelly-theme
                                       ample-theme
-                                      tronesque-theme
-                                      material-theme
+                                      gruvbox-theme
                                       )
 
    ;; A list of packages and/or extensions that will not be install and loaded.
-   dotspacemacs-excluded-packages '(cmm-mode)
+   dotspacemacs-excluded-packages '(ghc)
 
 
    ;; If non-nil spacemacs will delete any orphan packages, i.e. packages that
@@ -87,25 +84,20 @@
    ;; Press <SPC> T n to cycle to the next theme in the list (works great
    ;; with 2 themes variants, one dark and one light)
    dotspacemacs-themes '(
-                         flatland
                          darktooth
+                         gruvbox
                          gotham
-                         ujelly
-                         tronesque
-                         material
-                         material-light
                          solarized-light
-                         solarized-dark
                          )
 
 
    ;; Default font. The powerline-offset allows to quickly tweak the mode-line
    ;; size to make separators look not too crappy.
-   dotspacemacs-default-font '("Terminus (TTF)"
-                               :size 14
+   dotspacemacs-default-font '("Envy Code R"
+                               :size 13
                                :weight normal
                                :width normal
-                               :powerline-scale 1.3)
+                               :powerline-scale 1.2)
    ;; The leader key
    dotspacemacs-leader-key "SPC"
    ;; The leader key accessible in `emacs state' and `insert state'
@@ -143,7 +135,7 @@
    ;; can be toggled through `toggle-transparency'.
    dotspacemacs-inactive-transparency 70
    ;; If non nil unicode symbols are displayed in the mode line (e.g. for lighters)
-   dotspacemacs-mode-line-unicode-symbols t
+   dotspacemacs-mode-line-unicode-symbols nil
    ;; If non nil smooth scrolling (native-scrolling) is enabled. Smooth scrolling
    ;; overrides the default behavior of Emacs which recenters the point when
    ;; it reaches the top or bottom of the screen
@@ -170,7 +162,7 @@
   "This is were you can ultimately override default Spacemacs configuration.
 This function is called at the very end of Spacemacs initialization."
 
-  (setq powerline-default-separator nil)
+  ;; (setq powerline-default-separator nil)
   (global-company-mode)
 
   (define-key evil-normal-state-map "H" "^")
@@ -189,16 +181,19 @@ This function is called at the very end of Spacemacs initialization."
   ;; Rainbow css hook
   (add-hook 'css-mode-hook 'rainbow-mode)
   (add-hook 'clojure-mode-hook 'paredit-mode)
-
-  ;; (setq-default flycheck-disabled-checkers
-  ;;   (append flycheck-disabled-checkers '(javascript-jshint)))
-
-  ;; disable json-jsonlist checking for json files
-  (setq-default flycheck-disabled-checkers
-                (append flycheck-disabled-checkers
-                        '(json-jsonlist) '(javascript-jshint)))
-
-  ;; Use eslint
-  (flycheck-add-mode 'javascript-eslint 'web-mode)
-
   )
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(paradox-github-token t))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(default ((t (:family "Terminus (TTF)" :foundry "nil" :slant normal :weight normal :height 141 :width normal))))
+ '(company-tooltip-common ((t (:inherit company-tooltip :weight bold :underline nil))))
+ '(company-tooltip-common-selection ((t (:inherit company-tooltip-selection :weight bold :underline nil))))
+ '(font-lock-string-face ((t (:foreground "#b8bb26")))))
