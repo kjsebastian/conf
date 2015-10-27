@@ -40,8 +40,6 @@
    dotspacemacs-additional-packages '(yaml-mode
                                       darktooth-theme
                                       gotham-theme
-                                      ample-theme
-                                      gruvbox-theme
                                       )
 
    ;; A list of packages and/or extensions that will not be install and loaded.
@@ -85,16 +83,14 @@
    ;; with 2 themes variants, one dark and one light)
    dotspacemacs-themes '(
                          darktooth
-                         gruvbox
-                         gotham
                          solarized-light
                          )
 
 
    ;; Default font. The powerline-offset allows to quickly tweak the mode-line
    ;; size to make separators look not too crappy.
-   dotspacemacs-default-font '("Envy Code R"
-                               :size 13
+   dotspacemacs-default-font '("IosevkaCC"
+                               :size 15
                                :weight normal
                                :width normal
                                :powerline-scale 1.2)
@@ -135,7 +131,7 @@
    ;; can be toggled through `toggle-transparency'.
    dotspacemacs-inactive-transparency 70
    ;; If non nil unicode symbols are displayed in the mode line (e.g. for lighters)
-   dotspacemacs-mode-line-unicode-symbols nil
+   dotspacemacs-mode-line-unicode-symbols t
    ;; If non nil smooth scrolling (native-scrolling) is enabled. Smooth scrolling
    ;; overrides the default behavior of Emacs which recenters the point when
    ;; it reaches the top or bottom of the screen
@@ -193,7 +189,7 @@ This function is called at the very end of Spacemacs initialization."
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(default ((t (:family "Terminus (TTF)" :foundry "nil" :slant normal :weight normal :height 141 :width normal))))
  '(company-tooltip-common ((t (:inherit company-tooltip :weight bold :underline nil))))
  '(company-tooltip-common-selection ((t (:inherit company-tooltip-selection :weight bold :underline nil))))
- '(font-lock-string-face ((t (:foreground "#b8bb26")))))
+ )
+ ;; '(font-lock-string-face ((t (:foreground "#b8bb26")))))
